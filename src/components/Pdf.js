@@ -8,6 +8,7 @@ export default function Test() {
   pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
+  const [zoom, setZoom] = useState(1.5);
 
   /*To Prevent right click on screen*/
   document.addEventListener("contextmenu", (event) => {
@@ -49,10 +50,18 @@ export default function Test() {
       <Main className="main">
         <div className="d-flex mb-2 py-1 justify-content-end toggle-zoom">
           <div className="d-flex toggle-zoom-main">
-            <button className="btn toggle-zoom-minus">
+            <button
+              className="btn toggle-zoom-minus"
+              onClick={() => setZoom((c) => c - 1)}
+              disabled={zoom <= 1.5}
+            >
               <i className=" text-white fas fa-search-minus"></i>
             </button>
-            <button className="toggle-zoom-plus btn">
+            <button
+              className="toggle-zoom-plus btn"
+              onClick={() => setZoom((c) => c + 1)}
+              disabled={zoom >= 5}
+            >
               <i className=" text-white fas fa-search-plus"></i>
             </button>
           </div>
@@ -63,7 +72,7 @@ export default function Test() {
           onLoadSuccess={onDocumentLoadSuccess}
           id="text"
         >
-          <Page pageNumber={pageNumber} scale={1.5} className="pdfViewer_" />
+          <Page pageNumber={pageNumber} scale={zoom} className="pdfViewer_" />
         </Document>
         <div className="bg-warning mt-3 py-4 control-nav">
           <div className="d-flex bg-danger control-nav-main justify-content-center align-items-center">
@@ -94,6 +103,7 @@ export default function Test() {
 }
 
 const Main = styled.div`
+  user-select: none;
   width: 100%;
   min-height: 90vh;
   .toggle-zoom {
