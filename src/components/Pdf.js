@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import styled from "styled-components";
-
 const url = "https://arxiv.org/pdf/quant-ph/0410100.pdf";
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 export default function Test() {
-  pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+  // https://arxiv.org/pdf/quant-ph/0410100.pdf
+
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [zoom, setZoom] = useState(2);
@@ -33,17 +34,17 @@ export default function Test() {
     changePage(1);
   }
 
-  function search() {
-    let text = document.querySelectorAll("span");
-    console.log(text);
-    let txt_to_search = "hi";
-    txt_to_search = txt_to_search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    let pattern = new RegExp(`${txt_to_search}`, "gi");
-    text.innerHTML = text.textContent.replace(
-      pattern,
-      (match) => `<mark class="bg-warning">${match}</mark>`
-    );
-  }
+  // function search() {
+  //   let text = document.querySelectorAll("span");
+  //   console.log(text);
+  //   let txt_to_search = "hi";
+  //   txt_to_search = txt_to_search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  //   let pattern = new RegExp(`${txt_to_search}`, "gi");
+  //   text.innerHTML = text.textContent.replace(
+  //     pattern,
+  //     (match) => `<mark class="bg-warning">${match}</mark>`
+  //   );
+  // }
 
   return (
     <>
@@ -53,7 +54,7 @@ export default function Test() {
             <button
               className="btn toggle-zoom-minus"
               onClick={() => setZoom((c) => c - 1)}
-              disabled={zoom <= 1.5}
+              disabled={zoom <= 2}
             >
               <i className="fas fa-search-minus"></i>
             </button>
@@ -74,9 +75,17 @@ export default function Test() {
         >
           <Page pageNumber={pageNumber} scale={zoom} className="pdfViewer_" />
         </Document>
-        <div className=" mt-3 py-4 text-dark control-nav">
+        <div className=" mt-3 py-4 border-darken-4 text-dark control-nav">
+          <div className="pdf-progress py-1 border border-5 rounded-pill mb-3">
+            <div
+              className="dot rounded-circle"
+              style={{
+                left: `${Math.round((pageNumber / numPages) * 100) - 2}%`,
+              }}
+            ></div>
+          </div>
           <p className="text-end mb-2 fw-bold fs-5">
-            {Math.round((pageNumber / numPages) * 100)}% viewed
+            {Math.round((pageNumber / numPages) * 100)}% read
           </p>
           <div className="d-flex control-nav-main justify-content-center align-items-center">
             <button
@@ -108,7 +117,7 @@ export default function Test() {
 const Main = styled.div`
   user-select: none;
   width: 100%;
-  min-height: 842px;
+  min-height: 100vh;
   .toggle-zoom {
     &-main {
       gap: 2rem;
@@ -120,7 +129,7 @@ const Main = styled.div`
   .pdfViewer {
     min-height: inherit !important;
     &_ {
-      min-height: inherit;
+      height: auto;
       overflow: auto;
       section {
         display: none !important;
@@ -128,11 +137,23 @@ const Main = styled.div`
       canvas {
         direction: none;
         margin: 0 auto;
-        min-height: inherit;
+        height: inherit !important;
       }
     }
   }
   .control-nav {
+    .pdf-progress {
+      position: relative;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      .dot {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background: #a7a7a7;
+      }
+    }
     &-main {
       gap: 3rem;
     }

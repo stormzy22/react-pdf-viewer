@@ -3,7 +3,7 @@ import Pdf from "./components/Pdf";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App bg-light">
       <div className="container py-5">
         <Pdf />
       </div>
