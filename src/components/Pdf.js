@@ -34,18 +34,6 @@ export default function Test() {
     changePage(1);
   }
 
-  // function search() {
-  //   let text = document.querySelectorAll("span");
-  //   console.log(text);
-  //   let txt_to_search = "hi";
-  //   txt_to_search = txt_to_search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  //   let pattern = new RegExp(`${txt_to_search}`, "gi");
-  //   text.innerHTML = text.textContent.replace(
-  //     pattern,
-  //     (match) => `<mark class="bg-warning">${match}</mark>`
-  //   );
-  // }
-
   return (
     <>
       <Main className="main">
@@ -129,7 +117,7 @@ const Main = styled.div`
   .pdfViewer {
     min-height: inherit !important;
     &_ {
-      height: auto;
+      height: 1600px;
       overflow: auto;
       section {
         display: none !important;
@@ -137,7 +125,6 @@ const Main = styled.div`
       canvas {
         direction: none;
         margin: 0 auto;
-        height: inherit !important;
       }
     }
   }
