@@ -8,7 +8,7 @@ export default function Test() {
   pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
-  const [zoom, setZoom] = useState(1.5);
+  const [zoom, setZoom] = useState(2);
 
   /*To Prevent right click on screen*/
   document.addEventListener("contextmenu", (event) => {
@@ -55,14 +55,14 @@ export default function Test() {
               onClick={() => setZoom((c) => c - 1)}
               disabled={zoom <= 1.5}
             >
-              <i className=" text-white fas fa-search-minus"></i>
+              <i className="fas fa-search-minus"></i>
             </button>
             <button
               className="toggle-zoom-plus btn"
               onClick={() => setZoom((c) => c + 1)}
               disabled={zoom >= 5}
             >
-              <i className=" text-white fas fa-search-plus"></i>
+              <i className="fas fa-search-plus"></i>
             </button>
           </div>
         </div>
@@ -74,8 +74,11 @@ export default function Test() {
         >
           <Page pageNumber={pageNumber} scale={zoom} className="pdfViewer_" />
         </Document>
-        <div className="bg-warning mt-3 py-4 control-nav">
-          <div className="d-flex bg-danger control-nav-main justify-content-center align-items-center">
+        <div className=" mt-3 py-4 text-dark control-nav">
+          <p className="text-end mb-2 fw-bold fs-5">
+            {Math.round((pageNumber / numPages) * 100)}% viewed
+          </p>
+          <div className="d-flex control-nav-main justify-content-center align-items-center">
             <button
               type="button"
               disabled={pageNumber <= 1}
@@ -105,7 +108,7 @@ export default function Test() {
 const Main = styled.div`
   user-select: none;
   width: 100%;
-  min-height: 90vh;
+  min-height: 842px;
   .toggle-zoom {
     &-main {
       gap: 2rem;
