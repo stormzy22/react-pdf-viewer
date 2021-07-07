@@ -64,12 +64,22 @@ export default function Test() {
           <Page pageNumber={pageNumber} scale={zoom} className="pdfViewer_" />
         </Document>
         <div className=" mt-3 py-4 border-darken-4 text-dark control-nav">
-          <div className="pdf-progress py-1 border border-5 rounded-pill mb-3">
+          {/* <div className="pdf-progress py-1 border border-5 rounded-pill mb-3">
             <div
               className="dot rounded-circle"
               style={{
                 left: `${Math.round((pageNumber / numPages) * 100) - 2}%`,
               }}
+            ></div>
+          </div> */}
+          <div className="progress">
+            <div
+              className="progress-bar progress-bar-striped"
+              role="progressbar"
+              style={{ width: `${Math.round((pageNumber / numPages) * 100)}%` }}
+              aria-valuenow="25"
+              aria-valuemin="0"
+              aria-valuemax="100"
             ></div>
           </div>
           <p className="text-end mb-2 fw-bold fs-5">
